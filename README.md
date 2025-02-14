@@ -10,7 +10,7 @@
 - **Dynamic Wallpaper Integration**  
   Colors adapt to your wallpaper via `swww` or `hyprpaper`, with support for animated wallpapers and video backgrounds .
 - **Islamic Services**  
-  Built-in Azan notifications, prayer times (Mawaqet Alsalah), and Qibla direction via custom AGS widgets. Fully configurable for your location.
+  Built-in Azan notifications and prayer times (Mawaqet Alsalah) via custom AGS widgets. Fully configurable for your location.
 - **AGS-Powered UI**  
   Feature-rich sidebar with:
   - Weather forecasts (OpenWeatherMap API)
@@ -26,9 +26,9 @@
 
 | Preview 1 | Preview 2 | Preview 3 |
 |-----------|-----------|-----------|
-| <img src="./preview/1.png" alt="Light Theme Preview 1" width="400"/> | <img src="./preview/2.png" alt="Light Theme Preview 2" width="400"/> | <img src="./preview/3.png" alt="Light Theme Preview 3" width="400"/> |
+| <img src="./preview/1.png" alt="Light Theme Preview 1" width="800"/> | <img src="./preview/2.png" alt="Light Theme Preview 2" width="800"/> | <img src="./preview/3.png" alt="Light Theme Preview 3" width="800"/> |
 | **Preview 4** | **Preview 5** | **Preview 6** |
-| <img src="./preview/4.png" alt="Light Theme Preview 4" width="400"/> | <img src="./preview/5.png" alt="Light Theme Preview 5" width="400"/> | <img src="./preview/6.png" alt="Light Theme Preview 6" width="400"/> |
+| <img src="./preview/4.png" alt="Light Theme Preview 4" width="800"/> | <img src="./preview/5.png" alt="Light Theme Preview 5" width="800"/> | <img src="./preview/6.png" alt="Light Theme Preview 6" width="800"/> |
 
 ---
 
@@ -36,20 +36,20 @@
 
 | Preview 1 | Preview 2 | Preview 3 |
 |-----------|-----------|-----------|
-| <img src="./preview/7.png" alt="Dark Theme Preview 1" width="400"/> | <img src="./preview/8.png" alt="Dark Theme Preview 2" width="400"/> | <img src="./preview/9.png" alt="Dark Theme Preview 3" width="400"/> |
+| <img src="./preview/7.png" alt="Dark Theme Preview 1" width="800"/> | <img src="./preview/8.png" alt="Dark Theme Preview 2" width="800"/> | <img src="./preview/9.png" alt="Dark Theme Preview 3" width="800"/> |
 | **Preview 4** | **Preview 5** | **Preview 6** |
-| <img src="./preview/10.png" alt="Dark Theme Preview 4" width="400"/> | <img src="./preview/11.png" alt="Dark Theme Preview 5" width="400"/> | <img src="./preview/12.png" alt="Dark Theme Preview 6" width="400"/> |
+| <img src="./preview/10.png" alt="Dark Theme Preview 4" width="800"/> | <img src="./preview/11.png" alt="Dark Theme Preview 5" width="800"/> | <img src="./preview/12.png" alt="Dark Theme Preview 6" width="800"/> |
 
 ---
 ## 🌙 Static Themes Previews
 
 | Preview 1 | Preview 2 | Preview 3 |
 |-----------|-----------|-----------|
-| <img src="./preview/13.png" alt="Dark Theme Preview 1" width="400"/> | <img src="./preview/14.png" alt="Dark Theme Preview 2" width="400"/> | <img src="./preview/15.png" alt="Dark Theme Preview 3" width="400"/> |
+| <img src="./preview/13.png" alt="Dark Theme Preview 1" width="800"/> | <img src="./preview/14.png" alt="Dark Theme Preview 2" width="800"/> | <img src="./preview/15.png" alt="Dark Theme Preview 3" width="800"/> |
 | **Preview 4** | **Preview 5** | **Preview 6** |
-| <img src="./preview/16.png" alt="Dark Theme Preview 4" width="400"/> | <img src="./preview/17.png" alt="Dark Theme Preview 5" width="400"/> | <img src="./preview/18.png" alt="Dark Theme Preview 6" width="400"/> |
+| <img src="./preview/16.png" alt="Dark Theme Preview 4" width="800"/> | <img src="./preview/17.png" alt="Dark Theme Preview 5" width="800"/> | <img src="./preview/18.png" alt="Dark Theme Preview 6" width="800"/> |
 | **Preview 8** | **Preview 9** | **Preview 10** |
-| <img src="./preview/19.png" alt="Dark Theme Preview 4" width="400"/> | <img src="./preview/20.png" alt="Dark Theme Preview 5" width="400"/> | <img src="./preview/21.png" alt="Dark Theme Preview 6" width="400"/> |
+| <img src="./preview/19.png" alt="Dark Theme Preview 4" width="800"/> | <img src="./preview/20.png" alt="Dark Theme Preview 5" width="800"/> | <img src="./preview/21.png" alt="Dark Theme Preview 6" width="800"/> |
 
 </div>
 
@@ -90,7 +90,7 @@ ___
 ## 📦 Dependencies
 
 ```bash
-yay -S base-devel brightnessctl network-manager-applet konsole blueman ark dolphin ffmpegthumbs playerctl kvantum polkit-kde-agent jq gufw tar gammastep wl-clipboard easyeffects hyprpicker hyprshot-git bc sysstat kitty sassc systemsettings acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 aylurs-gtk-shell-git ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil gnome-bluetooth-3.0 power-profiles-daemon libjpeg6-turbo swww python-regex copyq swww
+yay -S cronie base-devel brightnessctl network-manager-applet konsole blueman ark dolphin ffmpegthumbs playerctl kvantum polkit-kde-agent jq gufw tar gammastep wl-clipboard easyeffects hyprpicker hyprshot-git bc sysstat kitty sassc systemsettings acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 aylurs-gtk-shell-git ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil gnome-bluetooth-3.0 power-profiles-daemon libjpeg6-turbo swww python-regex copyq swww
 ```
 ___
 ## Installation:

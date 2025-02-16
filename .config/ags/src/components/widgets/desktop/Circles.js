@@ -61,7 +61,7 @@ const informationBox = Widget.Box({
     children: [
         TitleText({
             title: strings.linuxTitle,
-            text: '',
+            text: '',
             vertical: false,
             spacing: 60,
             boxClass: 'information-widget-header',
@@ -105,8 +105,7 @@ const informationBox = Widget.Box({
             self.children[3].children[1].label = data.host_name;
             self.children[4].children[1].label = data.uptime;
             self.children[5].children[1].label = data.package_manager;
-            self.children[6].children[1].label =
-                data.installed_packages.toString();
+            self.children[6].children[1].label = data.installed_packages.toString();
         })
         .catch(print);
 });

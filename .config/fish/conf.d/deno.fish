@@ -1,1 +1,0 @@
-source "/home/nixev/.deno/env.fish"

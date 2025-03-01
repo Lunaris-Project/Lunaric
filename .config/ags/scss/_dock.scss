@@ -1,0 +1,50 @@
+.dock-bg {
+    background-color: $layer0;
+    padding: 0.92rem;
+    margin-top: 1rem;
+    box-shadow: 
+    0 2px 3px rgba(0, 0, 0, 0.1), /* Lighter, broader blur for depth */
+    0 5px 10px rgba(0, 0, 0, 0.08), /* Lighter, broader blur for depth */
+    0 10px 20px rgba(0, 0, 0, 0.2),  /* Subtle mid-distance shadow */
+   
+}
+.dock-round {
+    border-radius: $rounding_mediumlarge $rounding_mediumlarge 0 0;
+}
+.dock-app-btn-animate {
+    transition-property: background-color;
+    transition-duration: 0.5s;
+}
+
+.dock-app-btn {
+    @include normal-rounding;
+    padding: 0.273rem;
+}
+
+.pinned-dock-app-btn {
+    @include full-rounding;
+    padding: 0.273rem;
+    color:$secondary;
+    // background-color: $layer0Hover;
+}
+
+.dock-app-btn:hover,
+.dock-app-btn:focus {
+    background-color: $layer0Hover;
+}
+
+.dock-app-btn:active {
+    background-color: $layer0Active;
+}
+
+.dock-app-icon {
+    min-width: 3.409rem;
+    min-height: 3.409rem;
+    font-size: 3.409rem;
+}
+
+.dock-separator {
+    min-width: 0.07rem;
+    margin:0 0.8rem;
+    background-color: $outline;
+}

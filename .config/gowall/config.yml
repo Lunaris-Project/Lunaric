@@ -1,0 +1,15 @@
+EnableImagePreviewing: false
+OutputFolder: "/Pictures/Wallpapers/"
+themes:
+  - name: "monochrome"
+    colors:
+      - "#FFFFFF"  # White
+      - "#E6E6E6"
+      - "#CCCCCC"
+      - "#B3B3B3"
+      - "#999999"
+      - "#808080"
+      - "#666666"
+      - "#4D4D4D"
+      - "#333333"
+      - "#000000"  # Black

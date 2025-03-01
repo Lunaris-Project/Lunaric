@@ -321,7 +321,7 @@ DEPENDENCIES
     - swww      : For wallpaper display and transitions
 
 AUTHOR
-    Github: PharmaRacist
+    Github: Nixev
 EOF
             exit 1
             ;;

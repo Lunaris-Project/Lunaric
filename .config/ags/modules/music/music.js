@@ -111,7 +111,7 @@ const TrackTitle = ({ player, ...rest }) => Label({
 const TrackArtists = ({ player, ...rest }) => Label({
     ...rest,
     xalign: 0,
-    label: 'HyprNoon',
+    label: 'Lunaric',
     className: 'osd-music-artists txt-shadow',
     truncate: 'end',
     setup: (self) => {

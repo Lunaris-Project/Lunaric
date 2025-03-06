@@ -83,7 +83,7 @@ const Shortcuts = () => {
   const gitHubButton = createNerdButton({
     name: "GitHub",
     icon: "\uea84 ",
-    onClicked: () => Utils.execAsync(`firefox --new-window github.com/Lunaris-Project`),
+    onClicked: () => Utils.execAsync(`firefox --new-window github.com/pharmaracist`),
   });
 
   const yt = createNerdButton({

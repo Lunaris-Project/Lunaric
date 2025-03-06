@@ -15,7 +15,7 @@ import { substitute } from '../.miscutils/icons.js';
 import { getValidIcon } from '../.miscutils/icon_handling.js';
 
 const icon_files = userOptions.asyncGet().icons.searchPaths.map(e => getAllFiles(e)).flat(1)
-
+let appSize = userOptions.asyncGet().dock.appSize || 36
 let isPinned = false
 let cachePath = new Map()
 
@@ -58,27 +58,13 @@ const PinButton = () => Widget.Button({
         homogeneous: true,
         className: 'dock-app-icon txt',
         child: Widget.Icon({
-            icon:"hyprlunaris-symbolic",
-            size:48
+            icon:"logo-symbolic",
+            size:appSize
         })
     }),
     onClicked: (self) => {
         isPinned = !isPinned
         self.className = `${isPinned ? "pinned-dock-app-btn" : "dock-app-btn animate"} dock-app-btn-animate`
-    },
-    setup: setupCursorHover,
-})
-
-const LauncherButton = () => Widget.Button({
-    className: 'dock-app-btn dock-app-btn-animate',
-    tooltipText: 'Open launcher',
-    child: Widget.Box({
-        homogeneous: true,
-        className: 'dock-app-icon txt',
-        child: MaterialIcon('apps', 'hugerass')
-    }),
-    onClicked: (self) => {
-        App.toggleWindow('overview');
     },
     setup: setupCursorHover,
 })
@@ -100,6 +86,7 @@ const AppButton = ({ icon, ...rest }) => Widget.Revealer({
                     className: 'dock-app-icon',
                     child: Widget.Icon({
                         icon: icon,
+                        size:appSize
                     }),
                 }),
                 overlays: [Widget.Box({

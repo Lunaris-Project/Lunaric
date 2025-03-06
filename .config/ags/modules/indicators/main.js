@@ -20,9 +20,9 @@ export default (monitor = 0) => Widget.Window({
             className: 'osd-window',
             css: 'min-height: 0px;',
             children: [
+                ColorschemeContent(),
                 IndicatorValues(monitor),
                 NotificationPopups(),
-                ColorschemeContent(),
             ]
         })
     }),

@@ -11,7 +11,7 @@ import Clock from './inline_clock.js';
 const userName = GLib.get_real_name() + " ~ " + GLib.get_user_name();
 
 const WeatherWidget = () => {
-    const CYCLE_INTERVAL = userOptions.asyncGet().etc.weather.cycleTimeout || 10000;
+    const CYCLE_INTERVAL = 10000;
     const PRIORITY_DISPLAY_TIME = 1000;
 
     let displayMode = 'weather';
@@ -73,6 +73,7 @@ const WeatherWidget = () => {
     const contentStack = Stack({
         transition: 'slide_up_down',
         transitionDuration: userOptions.asyncGet().animations.durationSmall,
+        css: `padding: 0 20px`,
         children: {
             'weather': WeatherOnly(),
             'prayer': PrayerTimesWidget(),

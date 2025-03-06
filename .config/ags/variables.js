@@ -100,7 +100,6 @@ globalThis['closeEverything'] = () => {
     App.closeWindow('glance');
     App.closeWindow('recorder');
     App.closeWindow('wallselect');
-
 };
 
 // Watch for monitor changes and update modes
@@ -124,7 +123,7 @@ globalThis['cycleMode'] = () => {
 };
 
 // Force immediate update to ensure mode is set
-Utils.timeout(0, () => {
+Utils.timeout(0,() => {
     const modes = currentShellMode.value;
     currentShellMode.value = { ...modes };
 });

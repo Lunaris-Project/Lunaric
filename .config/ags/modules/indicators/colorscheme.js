@@ -9,7 +9,6 @@ import { showColorScheme } from '../../variables.js';
 import { MaterialIcon } from '../.commonwidgets/materialicon.js';
 import { darkMode } from '../.miscutils/system.js';
 import { RoundedCorner } from '../.commonwidgets/cairo_roundedcorner.js';
-export const image = Utils.exec([`bash`,`-c`, `cat ${GLib.get_home_dir()}/.cache/swww/eDP-1`]);
 const ColorBox = ({
     name = 'Color',
     ...rest
@@ -110,14 +109,17 @@ export const LIGHTDARK_FILE_LOCATION = `${GLib.get_user_state_dir()}/ags/user/co
 export const initTransparency = Utils.exec(`bash -c "sed -n \'2p\' ${LIGHTDARK_FILE_LOCATION}"`);
 export const initTransparencyVal = (initTransparency == "transparent") ? 1 : 0;
 
-export const initBorder = Utils.exec(`bash -c "sed -n \'5p\' ${LIGHTDARK_FILE_LOCATION}"`);
-export const initBorderVal = (initBorder == "border") ? 1 : 0;
-
 export const initScheme = Utils.exec(`bash -c "sed -n \'3p\' ${LIGHTDARK_FILE_LOCATION}"`);
 export const initSchemeIndex = calculateSchemeInitIndex(schemeOptionsArr, initScheme);
 
 export const initGowall = Utils.exec(`bash -c "sed -n \'4p\' ${LIGHTDARK_FILE_LOCATION}"`);
 export const initGowallIndex = calculateSchemeInitIndex(gowallArr, initGowall);
+
+export const initBorder = Utils.exec(`bash -c "sed -n \'5p\' ${LIGHTDARK_FILE_LOCATION}"`);
+export const initBorderVal = (initBorder == "border") ? 1 : 0;
+
+export const initVibrancy = Utils.exec(`bash -c "sed -n \'6p\' ${LIGHTDARK_FILE_LOCATION}"`);
+export const initVibrancyVal = (initTransparency == "vibrant") ? 1 : 0;
 
 const ColorSchemeSettings = () => Widget.Box({
     className: 'osd-colorscheme-settings spacing-v-5 margin-20',
@@ -148,6 +150,21 @@ const ColorSchemeSettings = () => Widget.Box({
                     }),
                 }),
                 ConfigToggle({
+                    icon: 'format_paint',
+                    name: getString('Vibrancy'),
+                    desc: getString('Make Everything Vibrant'),
+                    initValue: initVibrancyVal,
+                    onChange: async (self, newValue) => {
+                        try {
+                            const vibrancy = newValue == 0 ? "normal" : "vibrant";
+                            await execAsync([`bash`, `-c`, `mkdir -p ${GLib.get_user_state_dir()}/ags/user && sed -i "6s/.*/${vibrancy}/"  ${GLib.get_user_state_dir()}/ags/user/colormode.txt`]);
+                            await execAsync(['bash', '-c', `${App.configDir}/scripts/color_generation/applycolor.sh &`]);
+                        } catch (error) {
+                            console.error('Error changing vibrancy:', error);
+                        }
+                    },
+                }),
+                ConfigToggle({
                     icon: 'border_clear',
                     name: getString('Transparency'),
                     desc: getString('Make Everything transparent'),
@@ -162,17 +179,6 @@ const ColorSchemeSettings = () => Widget.Box({
                         }
                     },
                 }),
-                // ConfigToggle({
-                //     icon: 'image',
-                //     name: getString('GoWall'),
-                //     desc: getString('Theme Wallpaper for ColorPalette'),
-                //     initValue: initGowallIndex,
-                //     onChange: async (self, newValue) => {
-                //             const gowall = newValue == 0 ? "none" : "catppuccin";
-                //             await execAsync([`bash`, `-c`, `mkdir -p ${GLib.get_user_state_dir()}/ags/user && sed -i "4s/.*/${gowall}/"  ${GLib.get_user_state_dir()}/ags/user/colormode.txt`]);
-                //             await execAsync(['bash', '-c', `${App.configDir}/scripts/color_generation/applycolor.sh &`]);
-                //        },
-                // }),
                 ConfigToggle({
                     icon: 'ripples',
                     name: getString('Borders'),
@@ -208,26 +214,26 @@ const ColorSchemeSettings = () => Widget.Box({
                     initIndex: initSchemeIndex,
                     onChange: async (value, name) => {
                         await execAsync([`bash`, `-c`, `mkdir -p ${GLib.get_user_state_dir()}/ags/user && sed -i "3s/.*/${value}/"  ${GLib.get_user_state_dir()}/ags/user/colormode.txt`]);
-                        await execAsync([`bash`, `-c`, `matugen image ${image} -t ${value}`]);
-                          },
+                        await execAsync([`bash`, `-c`, `${App.configDir}/scripts/color_generation/colorgen.sh`]).catch(print);
+},
                 }),
-                // Widget.Label({
-                //     xalign: 0,
-                //     className: 'txt-norm titlefont onSurfaceVariant',
-                //     label: getString('Wallpaper Styles'),
-                //     hpack: 'center',
-                // }),
-                // ConfigMulipleSelection({
-                //     hpack: 'center',
-                //     vpack: 'center',
-                //     css:`margin-bottom:1.5rem`,
-                //     optionsArr: gowallArr,
-                //     initIndex: initGowallIndex,
-                //     onChange: (value, name) => {
-                //         execAsync([`bash`, `-c`, `matugen image ${image} -t ${value}`]).catch(print);
-                //             // .then(execAsync(['bash', '-c', `${App.configDir}/scripts/color_generation/switchwall.sh --switch`]))
-                //     },
-                // }),
+                Widget.Label({
+                    xalign: 0,
+                    className: 'txt-norm titlefont onSurfaceVariant',
+                    label: getString('Wallpaper Styles'),
+                    hpack: 'center',
+                }),
+                ConfigMulipleSelection({
+                    hpack: 'center',
+                    vpack: 'center',
+                    css:`margin-bottom:1.5rem`,
+                    optionsArr: gowallArr,
+                    initIndex: initGowallIndex,
+                    onChange: async (value, name) => {
+                        await execAsync([`bash`, `-c`, `mkdir -p ${GLib.get_user_state_dir()}/ags/user && sed -i "4s/.*/${value}/"  ${GLib.get_user_state_dir()}/ags/user/colormode.txt`]);
+                        await execAsync([`bash`, `-c`, `${App.configDir}/scripts/color_generation/gowall.sh`]).catch(print);
+                    },
+                }),
                 //////////////////
             ]
         })
@@ -249,7 +255,7 @@ const ColorschemeContent = () =>
             children: [
                 Widget.Label({
                     xalign: 0,
-                    css:`padding:0.56rem 0`,
+                    css:`padding:0.26rem 0`,
                     className: 'txt-large titlefont txt',
                     label: getString('Appearence'),
                     hpack: 'center',
@@ -304,7 +310,7 @@ export default () => Widget.Revealer({
                     setTimeout(() => {
                         if (isHoveredColorschemeSettings.value == false)
                             revealer.revealChild = showColorScheme.value;
-                    }, 800);
+                    }, 0);
                 }
             })
     },

@@ -1,13 +1,11 @@
 const { GLib, Gio } = imports.gi;
-import Hyprland from 'resource:///com/github/Aylur/ags/service/hyprland.js';
 import Widget from 'resource:///com/github/Aylur/ags/widget.js';
 import * as Utils from 'resource:///com/github/Aylur/ags/utils.js';
-const { Box, Button, Icon, Label, Scrollable, Slider, Stack } = Widget;
+const { Box, Label, Scrollable} = Widget;
 const { execAsync, exec } = Utils;
-import { MaterialIcon } from '../../.commonwidgets/materialicon.js';
-import { setupCursorHover } from '../../.widgetutils/cursorhover.js';
-import { ConfigGap, ConfigSpinButton, ConfigToggle } from '../../.commonwidgets/configwidgets.js';
-import { initBorder, initBorderVal, initTransparencyVal,initTransparency, initScheme, initSchemeIndex, initGowall, initGowallIndex } from './../../indicators/colorscheme.js';
+import { ConfigGap, ConfigSpinButton,ConfigSeparator, ConfigToggle } from '../../.commonwidgets/configwidgets.js';
+import { initBorder, initBorderVal, initTransparencyVal,initVibrancy,initVibrancyVal,initTransparency, initScheme, initSchemeIndex, initGowall, initGowallIndex } from '../../indicators/colorscheme.js';
+
 const HyprlandToggle = ({ icon, name, desc = null, option, enableValue = 1, disableValue = 0, extraOnChange = () => { } }) => ConfigToggle({
     icon: icon,
     name: name,
@@ -57,6 +55,7 @@ export default (props) => {
         vexpand: true,
         child: Box({
             vertical: true,
+            css:`margin-top:2rem`,
             className: 'spacing-v-10',
             children: [
                 ConfigSection({
@@ -89,6 +88,21 @@ export default (props) => {
                             },
                         }),
                         ConfigToggle({
+                            icon: 'format_paint',
+                            name: getString('Vibrancy'),
+                            desc: getString('Make Everything Vibrant'),
+                            initValue: initVibrancyVal,
+                            onChange: async (self, newValue) => {
+                                try {
+                                    const vibrancy = newValue == 0 ? "normal" : "vibrant";
+                                    await execAsync([`bash`, `-c`, `mkdir -p ${GLib.get_user_state_dir()}/ags/user && sed -i "6s/.*/${vibrancy}/"  ${GLib.get_user_state_dir()}/ags/user/colormode.txt`]);
+                                    await execAsync(['bash', '-c', `${App.configDir}/scripts/color_generation/applycolor.sh &`]);
+                                } catch (error) {
+                                    console.error('Error changing vibrancy:', error);
+                                }
+                            },
+                        }),
+                        ConfigToggle({
                             icon: 'ripples',
                             name: getString('Borders'),
                             desc: getString('Make Everything Bordered'),
@@ -103,31 +117,19 @@ export default (props) => {
                                            }
                             },
                             }),
-                        ConfigToggle({
-                            icon: 'image',
-                            name: getString('GoWall'),
-                            desc: getString('Theme Wallpaper for ColorPalette'),
-                            initValue: exec(`bash -c "sed -n \'4p\' ${GLib.get_user_state_dir()}/ags/user/colormode.txt"`) != "none",
-                            onChange: (self, newValue) => {
-                                const gowall = newValue == 0 ? "none" : "catppuccin";
-                                console.log(gowall);
-                                execAsync([`bash`, `-c`, `mkdir -p ${GLib.get_user_state_dir()}/ags/user && sed -i "4s/.*/${gowall}/"  ${GLib.get_user_state_dir()}/ags/user/colormode.txt`])
-                                    .then(execAsync(['bash', '-c', `${App.configDir}/scripts/color_generation/switchcolor.sh --switch`]))
-                                    .catch(print);
-                            },
-                        }),
-                        HyprlandToggle({ icon: 'blur_on', name: getString('Blur'), desc: getString("[Hyprland]\nEnable blur on transparent elements\nDoesn't affect performance/power consumption unless you have transparent windows."), option: "decoration:blur:enabled" }),
-                        Subcategory([
-                            HyprlandToggle({ icon: 'stack_off', name: getString('X-ray'), desc: getString("[Hyprland]\nMake everything behind a window/layer except the wallpaper not rendered on its blurred surface\nRecommended to improve performance (if you don't abuse transparency/blur) "), option: "decoration:blur:xray" }),
-                            HyprlandSpinButton({ icon: 'target', name: getString('Size'), desc: getString('[Hyprland]\nAdjust the blur radius. Generally doesn\'t affect performance\nHigher = more color spread'), option: 'decoration:blur:size', minValue: 1, maxValue: 1000 }),
-                            HyprlandSpinButton({ icon: 'repeat', name: getString('Passes'), desc: getString('[Hyprland] Adjust the number of runs of the blur algorithm\nMore passes = more spread and power consumption\n4 is recommended\n2- would look weird and 6+ would look lame.'), option: 'decoration:blur:passes', minValue: 1, maxValue: 10 }),
-                        ]),
-                        ConfigGap({}),
-                        HyprlandToggle({
-                            icon: 'animation', name: getString('Animations'), desc: getString('[Hyprland] [GTK]\nEnable animations'), option: 'animations:enabled',
-                            extraOnChange: (self, newValue) => execAsync(['gsettings', 'set', 'org.gnome.desktop.interface', 'enable-animations', `${newValue}`])
-                        }),
-                        Subcategory([
+                        // ConfigToggle({
+                        //     icon: 'image',
+                        //     name: getString('GoWall'),
+                        //     desc: getString('Theme Wallpaper for ColorPalette'),
+                        //     initValue: exec(`bash -c "sed -n \'4p\' ${GLib.get_user_state_dir()}/ags/user/colormode.txt"`) != "none",
+                        //     onChange: (self, newValue) => {
+                        //         const gowall = newValue == 0 ? "none" : "catppuccin";
+                        //         console.log(gowall);
+                        //         execAsync([`bash`, `-c`, `mkdir -p ${GLib.get_user_state_dir()}/ags/user && sed -i "4s/.*/${gowall}/"  ${GLib.get_user_state_dir()}/ags/user/colormode.txt`])
+                        //             .then(execAsync(['bash', '-c', `${App.configDir}/scripts/color_generation/switchcolor.sh --switch`]))
+                        //             .catch(print);
+                        //     },
+                        // }),
                             ConfigSpinButton({
                                 icon: 'clear_all',
                                 name: getString('Choreography delay'),
@@ -138,9 +140,27 @@ export default (props) => {
                                     userOptions.asyncGet().animations.choreographyDelay = newValue
                                 },
                             }),
-                        ]),
+                            ConfigSeparator(),
+
+                        ConfigSection({
+                            name: getString('Hyprland'), children: [
+                                HyprlandToggle({ icon: 'blur_on', name: getString('Blur'), desc: getString("[Hyprland]\nEnable blur on transparent elements\nDoesn't affect performance/power consumption unless you have transparent windows."), option: "decoration:blur:enabled" }),
+                                Subcategory([
+                                    HyprlandToggle({ icon: 'stack_off', name: getString('X-ray'), desc: getString("[Hyprland]\nMake everything behind a window/layer except the wallpaper not rendered on its blurred surface\nRecommended to improve performance (if you don't abuse transparency/blur) "), option: "decoration:blur:xray" }),
+                                    HyprlandSpinButton({ icon: 'target', name: getString('Size'), desc: getString('[Hyprland]\nAdjust the blur radius. Generally doesn\'t affect performance\nHigher = more color spread'), option: 'decoration:blur:size', minValue: 1, maxValue: 1000 }),
+                                    HyprlandSpinButton({ icon: 'repeat', name: getString('Passes'), desc: getString('[Hyprland] Adjust the number of runs of the blur algorithm\nMore passes = more spread and power consumption\n4 is recommended\n2- would look weird and 6+ would look lame.'), option: 'decoration:blur:passes', minValue: 1, maxValue: 10 }),
+                                    HyprlandToggle({
+                                        icon: 'animation', name: getString('Animations'), desc: getString('[Hyprland] [GTK]\nEnable animations'), option: 'animations:enabled',
+                                        extraOnChange: (self, newValue) => execAsync(['gsettings', 'set', 'org.gnome.desktop.interface', 'enable-animations', `${newValue}`])
+                                    }),
+            
+                                ]),
+        
+                            ]
+                        }),
                     ]
                 }),
+                ConfigSeparator(),
                 ConfigSection({
                     name: getString('Developer'), children: [
                         ConfigToggle({
@@ -161,21 +181,10 @@ export default (props) => {
             ]
         })
     });
-    const footNote = Box({
-        homogeneous: true,
-        children: [Label({
-            hpack: 'center',
-            className: 'txt txt-italic txt-subtext margin-5',
-            label: getString('Not all changes are saved'),
-        })]
-    })
     return Box({
         ...props,
         className: 'spacing-v-5',
         vertical: true,
-        children: [
-            mainContent,
-            // footNote,
-        ]
+        child: mainContent
     });
 }

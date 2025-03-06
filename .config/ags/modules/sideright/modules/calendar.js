@@ -227,6 +227,7 @@ const StackButton = (stackItemName, icon, name) =>
 export const ModuleCalendar = (props = {}) =>
   Box({
     hexpand: true,
+    css: `margin-top:1rem`,
     className: "sidebar-group spacing-h-5",
     setup: (box) => {
       box.pack_start(

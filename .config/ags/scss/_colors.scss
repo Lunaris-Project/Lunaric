@@ -101,4 +101,32 @@ $sessionColors: (
 );
 $brightnessOnLayer0: $onLayer0;
 $volumeOnLayer0: $onLayer0;
+$vibrancy:30%;
+@if $vibrant == True {
+  $background: saturate($background, $vibrancy);
+  $surface: saturate($surface, $vibrancy);
+  $surfaceDim: saturate($surfaceDim, $vibrancy);
+  $surfaceBright: saturate($surfaceBright, $vibrancy);
+  $surfaceContainerLowest: saturate($surfaceContainerLowest, $vibrancy);
+  $surfaceContainerLow: saturate($surfaceContainerLow, $vibrancy);
+  $surfaceContainer: saturate($surfaceContainer, $vibrancy);
+  $surfaceContainerHigh: saturate($surfaceContainerHigh, $vibrancy);
+  $surfaceContainerHighest: saturate($surfaceContainerHighest, $vibrancy);
+  $surfaceVariant: saturate($surfaceVariant, $vibrancy);
+  $inverseSurface: saturate($inverseSurface, $vibrancy);
+  $surfaceTint: saturate($surfaceTint, $vibrancy);
 
+  // Optionally, adjust other color layers
+  $primary: saturate($primary, $vibrancy);
+  $secondary: saturate($secondary, $vibrancy);
+  $onPrimary: saturate($onPrimary, $vibrancy);
+  $onSecondary: saturate($onSecondary, $vibrancy);
+  $layer0: saturate($layer0, $vibrancy);
+  $onLayer0: saturate($onLayer0, $vibrancy);
+  $layer1: saturate($layer1, $vibrancy);
+  $onLayer1: saturate($onLayer1, $vibrancy);
+  $layer2: saturate($layer2, $vibrancy);
+  $onLayer2: saturate($onLayer2, $vibrancy);
+  $layer3: saturate($layer3, $vibrancy);
+  $onLayer3: saturate($onLayer3, $vibrancy);
+}

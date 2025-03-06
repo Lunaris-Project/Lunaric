@@ -111,7 +111,7 @@ const TrackTitle = ({ player, ...rest }) => Label({
 const TrackArtists = ({ player, ...rest }) => Label({
     ...rest,
     xalign: 0,
-    label: 'Lunaric',
+    label: 'HyprNoon',
     className: 'osd-music-artists txt-shadow',
     truncate: 'end',
     setup: (self) => {
@@ -170,8 +170,8 @@ const CoverArt = ({ player, ...rest }) => {
         }
     });
     let fallbackIcon = Icon({
-        className: 'sec-txt',
-        icon: 'hyprlunaris-symbolic',
+        className: 'onSurfaceVariant',
+        icon: 'logo-symbolic',
         css:`min-width:235px;min-height:235px`,
         size:"164",
         visible:false
@@ -455,7 +455,7 @@ const PlayState = ({ player }) => {
     });
 }
 const CavaVisualizer = () => {
-    const bars = Array(60).fill(0).map(() => Widget.Box({
+    const bars = Array(50).fill(0).map(() => Widget.Box({
         className: 'cava-bar cava-bar-low',
         hpack: 'center',
         vpack:"center",

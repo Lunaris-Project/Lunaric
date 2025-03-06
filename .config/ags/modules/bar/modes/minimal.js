@@ -20,7 +20,9 @@ const createMinimalBar = async () => {
       css: "margin-left:1.8rem;",
       children: [
         ScrolledModule({
+          hpack:"center",
           children: [
+            Box({child:BarBattery(),css:`margin-right:1rem`}),
             EventBox({
               child: Widget.Icon({
                 icon: getDistroIcon(),
@@ -30,24 +32,16 @@ const createMinimalBar = async () => {
                 App.toggleWindow("sideleft");
               },
             }),
-           
-           BarBattery()
           ],
         }),
-        ScrolledModule({
-          children: [
-            ...(workspaces ? [await NormalOptionalWorkspaces()] : []),
-            ...(workspaces ? [await FocusOptionalWorkspaces()] : []),
-          ],
-        }),
+        ...(workspaces ? [await NormalOptionalWorkspaces()] : []),
       ],
     }),
     centerWidget: ScrolledModule({children:[
       media(),
       Clock(),
       Box()
-    ]}),
-      
+    ]}),      
     endWidget: Widget.Box({
       children: [
         ScrolledModule({

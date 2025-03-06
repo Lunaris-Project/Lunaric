@@ -1,4 +1,4 @@
-const { GLib } = imports.gi;
+const { GLib ,Gio} = imports.gi;
 import Variable from 'resource:///com/github/Aylur/ags/variable.js';
 import * as Utils from 'resource:///com/github/Aylur/ags/utils.js';
 const { execAsync, exec } = Utils;
@@ -10,7 +10,8 @@ export const hasFlatpak = !!exec(`bash -c 'command -v flatpak'`);
 
 const LIGHTDARK_FILE_LOCATION = `${GLib.get_user_state_dir()}/ags/user/colormode.txt`;
 export const darkMode = Variable(!(Utils.readFile(LIGHTDARK_FILE_LOCATION).split('\n')[0].trim() == 'light'));
-let image = Utils.exec([`bash`,`-c`, `cat ${GLib.get_home_dir()}/.cache/swww/eDP-1`]);
+
+globalThis['currentWallpaper'] = Utils.readFile(`${GLib.get_user_state_dir()}/ags/user/current_wallpaper.txt`);
 darkMode.connect('changed', async ({ value }) => {
     try {
         const lightdark = value ? "dark" : "light";
@@ -22,7 +23,7 @@ darkMode.connect('changed', async ({ value }) => {
             '-c', 
             `mkdir -p "${userDir}/ags/user" && sed -i "1s/.*/${lightdark}/" "${userDir}/ags/user/colormode.txt"`
         ]).then(() => {
-            Utils.execAsync(`matugen image ${image} -m ${lightdark}`).catch((error) => {
+            Utils.execAsync([`bash`, `-c`, `${App.configDir}/scripts/color_generation/colorgen.sh`]).catch((error) => {
                 console.error('Error generating color scheme:', error);
             })
         });

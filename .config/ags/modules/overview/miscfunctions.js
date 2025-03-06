@@ -10,7 +10,7 @@ import userOptions from '../.configuration/user_options.js';
 import { currentShellMode, updateMonitorShellMode } from '../../variables.js';
 
 export const hasUnterminatedBackslash = str => /\\+$/.test(str);
-
+const logo = App.configDir + "/assets/icons/logo-symbolic.svg"
 export function launchCustomCommand(command) {
     const [cmd, ...args] = command.toLowerCase().split(' ');
     const execScript = (script, params = '') =>
@@ -173,7 +173,7 @@ if results:
         if (url) {
             const musicDir = GLib.get_home_dir() + '/Music';
             execAsync(['pkill', 'mpv']).catch(print);
-            execAsync(['notify-send', `Downloading "${title}"`, 'Starting download...']).catch(print);
+            execAsync(['notify-send', `Downloading "${title}"`,  '-i', `${logo}`, 'Starting download...']).catch(print);
             execAsync(['yt-dlp', 
                 '--extract-audio',
                 '--audio-format', 'mp3',
@@ -184,7 +184,7 @@ if results:
                 url.trim()
             ]).then(() => {
                 execAsync(['mpv', '--no-video', url.trim()]).catch(print);
-                execAsync(['notify-send', `Downloaded "${title}"`, 'Saved to Music folder']).catch(print);
+                execAsync(['notify-send', '-i',`${logo}`,`Downloaded "${title}"`, 'Saved to Music folder']).catch(print);
             }).catch(print);
         }
     }).catch(print);
@@ -258,7 +258,7 @@ if results:
                 // After playback finishes, download each track that was listened to
                 const musicDir = GLib.get_home_dir() + '/Music';
                 playlist.forEach(item => {
-                    execAsync(['notify-send', `Downloading "${item.title}"`, 'Starting download...']).catch(print);
+                    execAsync(['notify-send', `Downloading "${item.title}"`, '-i',`${logo}`,'Starting download...']).catch(print);
                     execAsync([
                         'yt-dlp',
                         '--extract-audio',
@@ -269,7 +269,7 @@ if results:
                         '--output', `${musicDir}/%(title)s.%(ext)s`,
                         item.url
                     ]).then(() => {
-                        execAsync(['notify-send', `Downloaded "${item.title}"`, 'Saved to Music folder']).catch(print);
+                        execAsync(['notify-send', '-i',`${logo}`,`Downloaded "${item.title}"`, 'Saved to Music folder']).catch(print);
                     }).catch(print);
                 });
             }).catch(print);
@@ -364,11 +364,12 @@ if results:
                 hour: '2-digit',
                 minute: '2-digit'
             });
-
             execAsync([
                 'notify-send',
                 `Timer Started: ${name}`,
                 `Will complete at ${endTime}`,
+                '-i',
+                `${logo}`,
                 '-t',
                 '3000'  // Show for 3 seconds
             ]).catch(print);

@@ -22,7 +22,6 @@ import ModuleAudioControls from "./centermodules/audiocontrols.js";
 import ModuleWifiNetworks from "./centermodules/wifinetworks.js";
 import ModulePowerProfiles from './centermodules/powerprofiles.js';
 import ModuleBluetooth from "./centermodules/bluetooth.js";
-import ModuleConfigure from "./centermodules/configure.js";
 import { ModuleCalendar } from "./modules/calendar.js";
 import ModulePrayerTimes from './centermodules/prayertimes.js';
 import { getDistroIcon } from '../.miscutils/system.js';
@@ -77,11 +76,6 @@ const modulesList = {
         materialIcon: 'wifi',
         contentWidget: ModuleWifiNetworks,
         onFocus: () => execAsync('nmcli dev wifi list').catch(print),
-    },
-    liveConfig: {
-        name: getString('Live config'),
-        materialIcon: 'tune',
-        contentWidget: ModuleConfigure,
     },
     prayerTimes: {
         name: 'Prayer Times',
@@ -199,19 +193,19 @@ export const sidebarOptionsStack = ExpandingIconTabContainer({
     }
 });
 const images = [
-    // '1',
-    // '2',
+    '1',
+    '2',
     '3',
     '4',
     '5',
     '6',
-    // '7',
-    // '8',
-    // '9',
-    // '10'
+    '7',
+    '8',
+    '9',
+    '10'
 ];
 
-const randomIndex = Math.floor(Math.random() * images.length);
+const randomIndex = Math.floor(Math.random() * images.length) || '1' ;
 export const selectedImage = images[randomIndex];
 
 const Cat = Widget.Button({
@@ -222,7 +216,7 @@ const Cat = Widget.Button({
     child: Widget.Icon({
         hpack: "end",
         hexpand: "true",
-        icon: selectedImage,
+        icon: selectedImage || '1',
         css: `font-size:7rem;margin-bottom:1rem`,
         className: 'txt sec-txt txt-massive',
     }),

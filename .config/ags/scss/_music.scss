@@ -5,9 +5,6 @@
 $music_transparentize_amount: 0.3;
 $music_gradient1: mix($layer0, $background, 100%);
 
-@if $darkmode == True {
-    $music_gradient1: mix($color1, $background, 30%);
-}
 
 $music_gradient2: $color3;
 $music_gradient3: $color5;
@@ -15,10 +12,6 @@ $music_colorstart_transparentize: 0.3;
 $music_extra_transparentize: 0.15;
 
 $secondaryContainer: transparentize(mix(mix($background, $color2, 50%), $color6, 80%), 0.5);
-$onSecondaryContainer: mix($color7, $color2, 90%);
-@if $darkmode == False {
-    $onSecondaryContainer: mix($onSecondaryContainer, black, 50%);
-}
 
 .osd-music {
     @include menu_decel;

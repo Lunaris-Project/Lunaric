@@ -14,7 +14,6 @@ import ColorPicker from "../bar/modules/color_picker.js";
 const { Box, Label, EventBox, Scrollable, Button, Revealer } = Widget;
 const opts = await userOptions.asyncGet().wallselect;
 const elevate = userOptions.asyncGet().etc.widgetCorners ? "wall-rounding shadow-window" : "elevation shadow-window";
-const CLICK_ACTION_SCRIPT = "matugen image";
 const WALLPAPER_DIR = GLib.get_home_dir() + opts.wallpaperFolder || '/Pictures/Wallpapers';
 const PREVIEW_WIDTH = opts.width || 200;
 const PREVIEW_HEIGHT = opts.height || 120;
@@ -120,7 +119,6 @@ const loadPreviewAsync = (path) => {
 
 
 // --- Caching wallpaper paths ---
-let switchWall = `swww img -t outer --transition-duration 1 --transition-step 255 --transition-fps 120 -f Nearest`;
 let wallpaperPathsCache = null;
 let wallpaperPathsCacheTime = 0;
 const CACHE_DURATION = 60 * 1e6; // 60 seconds in microseconds
@@ -241,7 +239,6 @@ const WallpaperPreview = (path) =>
       }
     }),
     onClicked: () => {
-        Utils.execAsync(['bash', '-c', `${switchWall} '${path}'`]).catch(print);
         Utils.execAsync(['bash', '-c', `matugen image ${path}`]).catch(print);
         App.closeWindow("wallselect");
     },

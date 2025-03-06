@@ -22,6 +22,7 @@ $sidebar_chat_textboxareaColor: mix($onSurfaceVariant, $surfaceVariant, 40%);
     background-color: $background;
     padding: 1.423rem;
     border: 0.6px solid $outliner;
+    border-left: none;
 }
 .sidebar-r {
     @include menu_decel;
@@ -29,6 +30,7 @@ $sidebar_chat_textboxareaColor: mix($onSurfaceVariant, $surfaceVariant, 40%);
     background-color: $background;
     padding: 1.423rem;
     border: 0.6px solid $outliner;
+    border-right: none;
 }
 .sidebar-round-r {
     border-radius:  $rounding_mediumlarge 0 0  $rounding_mediumlarge;
@@ -1412,4 +1414,9 @@ $skeleton-accent: mix($secondary, $onSecondary, 50%);
 .sidebar-bottom {
     border-radius: $rounding_medium 0 0 0;
 
+}
+.material-welcome-logo {
+    padding:0.5rem;
+    min-width:4rem;
+    margin-left:0.135rem
 }
